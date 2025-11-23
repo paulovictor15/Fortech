@@ -1,0 +1,212 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+header {
+    background-color: #0d6efd;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#banner {
+    background: linear-gradient(to right, #0d6efd, #00aaff);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.produto {
+    display: inline-block;
+    width: 200px;
+    margin: 15px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.dark-mode {
+    background-color: #000000;
+    background:linear-gradient(90deg,#000000,#144474);
+  border-bottom:1px solid rgba(16,24,40,0.04);
+    color: rgb(141, 128, 128);
+    header{
+  background:linear-gradient(90deg,#000000,#144474);
+  border-bottom:1px solid rgba(16,24,40,0.04);}
+    
+}
+
+/* Reset minimal */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+  line-height:1.45;
+  color:#222;
+  background: #f6f7fb;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Variáveis */
+:root{
+  --primary:#0b63ff;
+  --accent:#ff6b35;
+  --muted:#6b7280;
+  --card:#ffffff;
+  --radius:12px;
+  --max-w:1100px;
+  --gap:18px;
+}
+
+/* Layout geral */
+.container{
+  max-width:var(--max-w);
+  margin:0 auto;
+  padding:24px;
+}
+
+/* Header / Nav */
+header{
+  background:linear-gradient(90deg,#fff,#fbfdff);
+  border-bottom:1px solid rgba(16,24,40,0.04);
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+header .container{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 24px;
+}
+header h1{
+  font-size:1.25rem;
+  color:var(--primary);
+  letter-spacing:0.2px;
+}
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+nav a{
+  text-decoration:none;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:600;
+}
+nav a:hover{ background:rgba(11,99,255,0.06); color:var(--primary); }
+nav a.active{ background:var(--primary); color:#fff; box-shadow:0 6px 18px rgba(11,99,255,0.08); }
+
+/* Banner */
+#banner{
+  background: linear-gradient(180deg, #eef6ff, #ffffff);
+  border-radius:var(--radius);
+  margin:24px auto;
+  padding:28px;
+  text-align:left;
+  box-shadow:0 6px 18px rgba(12,30,60,0.04);
+}
+#banner h2{ color:var(--primary); font-size:1.5rem; margin-bottom:6px }
+#banner p{ color:var(--muted); margin-bottom:12px }
+#btn-destaque{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+
+/* Produtos / cards */
+#produtos-destaque{ margin:20px auto; }
+#produtos-destaque h2{ margin-bottom:10px; color:#111827 }
+.produto-grid{
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:var(--gap);
+}
+.produto{
+  background:var(--card);
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 8px 24px rgba(16,24,40,0.04);
+}
+.produto img{ max-width:100%; height:170px; object-fit:cover; border-radius:8px; margin-bottom:10px }
+.produto h3{ font-size:1.05rem; margin-bottom:6px }
+.produto p{ color:var(--muted); margin-bottom:10px; font-weight:700 }
+.btn-adicionar, button[type="submit"], #btn-pagar{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:10px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+}
+.btn-adicionar:hover, #btn-pagar:hover{ opacity:0.95; transform:translateY(-1px) }
+
+/* Forms (checkout / contato) */
+.main-content{ background:transparent; padding:18px 0 }
+form{
+  background:var(--card);
+  padding:18px;
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(16,24,40,0.04);
+  max-width:720px;
+}
+form input, form select, form textarea{
+  width:100%;
+  padding:10px 12px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid rgba(16,24,40,0.06);
+  font-size:0.95rem;
+}
+
+/* Footer */
+footer{
+  margin-top:28px;
+  padding:20px 0;
+  text-align:center;
+  color:var(--muted);
+  font-size:0.9rem;
+}
+
+/* Utilities */
+.row{ display:flex; gap:12px; align-items:center }
+.badge{ background:#eef2ff; color:var(--primary); padding:4px 8px; border-radius:999px; font-weight:600 }
+
+/* Responsividade */
+@media (max-width:800px){
+  .produto-grid{ grid-template-columns:1fr; }
+  nav ul{ gap:6px; }
+  header .container{ padding:10px 14px }
+  #banner{ padding:18px }
+}
