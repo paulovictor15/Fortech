@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finalizar Compra - Fortech</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Fortech</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="categorias.html">Categorias</a></li>
+                <li><a href="carrinho.html" id="carrinho-link">🛒 Carrinho (<span id="contador-carrinho">0</span>)</a></li>
+                <li><a href="contato.html">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <h2>🔒 Finalização da Compra</h2>
+        <form id="form-checkout">
+            <h3>1. Endereço de Entrega</h3>
+            <input type="text" placeholder="Nome Completo" required>
+            <input type="email" placeholder="E-mail" required>
+            <input type="text" placeholder="CEP" required>
+            
+            <h3>2. Pagamento</h3>
+            <select required>
+                <option value="">Selecione o Método de Pagamento</option>
+                <option value="cartao">Cartão de Crédito</option>
+                <option value="pix">PIX</option>
+                <option value="boleto">Boleto Bancário</option>
+            </select>
+
+            <button type="submit" id="btn-pagar">Pagar Agora</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Fortech - Todos os direitos reservados | <a href="politica.html">Política de Privacidade</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
