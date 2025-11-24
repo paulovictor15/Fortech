@@ -21,6 +21,10 @@
     </header>
 
     <main class="main-content">
+        <h3>🛒 Seus Produtos</h3>
+<div id="itens-carrinho"></div>
+
+<hr>
         <h2>🔒 Finalização da Compra</h2>
         <form id="form-checkout">
             <h3>1. Endereço de Entrega</h3>
@@ -44,6 +48,110 @@
         <p>&copy; 2025 Fortech - Todos os direitos reservados | <a href="politica.html">Política de Privacidade</a></p>
     </footer>
 
-    <script src="script.js"></script>
+ <script>
+    // Recupera o carrinho salvo
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let lista = document.getElementById("itens-carrinho");
+
+    function atualizarCarrinho() {
+        lista.innerHTML = ""; // limpa
+
+        if (carrinho.length === 0) {
+            lista.innerHTML = "<p>Seu carrinho está vazio.</p>";
+            return;
+        }
+
+        let total = 0;
+
+        carrinho.forEach((item, index) => {
+            // Converte preço "R$ 14,99" → 14.99
+            let precoNumerico = Number(item.preco.replace("R$", "").replace(",", "."));
+            total += precoNumerico;
+
+            let div = document.createElement("div");
+            div.classList.add("item-carrinho");
+            div.style.display = "flex";
+            div.style.alignItems = "center";
+            div.style.gap = "20px";
+            div.style.marginBottom = "15px";
+
+            div.innerHTML = `
+                <img src="${item.imagem}" width="80" height="80" style="border-radius:8px; border:1px solid #ccc;">
+                <div style="flex:1">
+                    <h4>${item.nome}</h4>
+                    <p>${item.preco}</p>
+                </div>
+                <button class="remover" data-index="${index}" style="
+                    padding: 8px 12px;
+                    background:red;
+                    color:white;
+                    border:none;
+                    cursor:pointer;
+                    border-radius:5px;
+                ">✖</button>
+            `;
+
+            lista.appendChild(div);
+        });
+
+        // Mostra o total
+        let totalDiv = document.createElement("h3");
+        totalDiv.textContent = "Total: R$ " + total.toFixed(2).replace(".", ",");
+        lista.appendChild(totalDiv);
+
+        // Botão de remover item
+        document.querySelectorAll(".remover").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let index = this.getAttribute("data-index");
+                carrinho.splice(index, 1);
+                localStorage.setItem("carrinho", JSON.stringify(carrinho));
+                atualizarCarrinho();
+            });
+        });
+    }
+
+    atualizarCarrinho();
+</script>
+<script>
+// ⭐ 1. CEP SOMENTE NÚMEROS E COM 8 DÍGITOS
+const cepInput = document.querySelector('input[placeholder="CEP"]');
+
+cepInput.addEventListener("input", function() {
+    // Remove tudo que NÃO for número
+    this.value = this.value.replace(/\D/g, "");
+
+    // Limita o tamanho para 8 números (CEP paulista e padrão nacional)
+    if (this.value.length > 8) {
+        this.value = this.value.slice(0, 8);
+    }
+});
+
+// ⭐ 2. FINALIZAR COMPRA – LIMPAR CARRINHO AO CLICAR EM PAGAR
+document.getElementById("form-checkout").addEventListener("submit", function(e) {
+    e.preventDefault(); // Impede o envio imediato
+
+    // Verificar se CEP tem 8 dígitos
+    if (cepInput.value.length !== 8) {
+        alert("CEP inválido! Digite exatamente 8 números.");
+        return;
+    }
+
+    // Limpa o carrinho
+    localStorage.removeItem("carrinho");
+
+    // Atualiza a lista na tela
+    document.getElementById("itens-carrinho").innerHTML = "<p>Carrinho vazio!</p>";
+
+    // Atualiza contador no menu
+    document.getElementById("contador-carrinho").textContent = "0";
+
+    // Mensagem de confirmação
+    alert("🎉 Compra finalizada com sucesso! Obrigado por comprar conosco.");
+
+    // Aqui você pode redirecionar se quiser:
+    // window.location.href = "index.html";
+});
+</script>
+
 </body>
 </html>
