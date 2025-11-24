@@ -3,23 +3,66 @@ window.onload = () => {
     alert("Bem-vindo(a) à Fortech! Confira nossas promoções 🔥");
 };
 
-// 2️⃣ Adicionar produto ao carrinho
-let botoes = document.querySelectorAll('.btn-adicionar');
-let carrinho = 0;
+// -------------------------------------------------------------
+// 2️⃣ SISTEMA DE CARRINHO —
+// -------------------------------------------------------------
 
-botoes.forEach(btn => {
-    btn.addEventListener('click', () => {
-        carrinho++;
-        alert("Produto adicionado! Itens no carrinho: " + carrinho);
+// Carregar carrinho do localStorage
+let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+// Atualizar contador do carrinho no menu
+function atualizarContador() {
+    document.querySelectorAll('#contador-carrinho').forEach(el => {
+        el.textContent = carrinho.length;
+    });
+}
+atualizarContador();
+
+// Função global para adicionar item ao carrinho
+window.addToCart = function (btn) {
+    // Pegando o elemento pai do produto
+    let produtoEl = btn.closest(".produto");
+
+    let produto = {
+        nome: produtoEl.querySelector("h4").textContent,
+        preco: produtoEl.querySelector("p").textContent,
+        imagem: produtoEl.querySelector("img").src
+    };
+
+    // Adiciona no carrinho
+    carrinho.push(produto);
+
+    // Salva no localStorage
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+
+    // Atualiza contador
+    atualizarContador();
+
+    // Feedback no botão
+    btn.textContent = "Adicionado ✓";
+    setTimeout(() => btn.textContent = "Adicionar", 1200);
+};
+
+// Ativar botões
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".btn-adicionar").forEach(btn => {
+        btn.addEventListener("click", () => addToCart(btn));
     });
 });
 
+// -------------------------------------------------------------
 // 3️⃣ Botão de destaque leva à página de produtos
-document.getElementById('btn-destaque').addEventListener('click', () => {
-    window.location.href = "produtos.html";
-});
+// -------------------------------------------------------------
+let destaque = document.getElementById('btn-destaque');
+if (destaque) {
+    destaque.addEventListener('click', () => {
+        window.location.href = "produtos.html";
+    });
+}
 
+// -------------------------------------------------------------
 // 4️⃣ Tema escuro/claro
+// -------------------------------------------------------------
 function alternarTema() {
     document.body.classList.toggle("dark-mode");
 }
@@ -30,7 +73,9 @@ document.body.insertAdjacentHTML("beforeend", `
 
 document.getElementById("tema-btn").addEventListener("click", alternarTema);
 
-// 5️⃣ Filtragem de produtos (exemplo simplificado)
+// -------------------------------------------------------------
+// 5️⃣ Filtragem simples
+// -------------------------------------------------------------
 function filtrarProdutos(categoria) {
     const produtos = document.querySelectorAll('.produto');
     produtos.forEach(prod => {
@@ -38,49 +83,3 @@ function filtrarProdutos(categoria) {
     });
 }
 
-
-// Mantém contador de carrinho simples usando localStorage
-(function(){
-  function getCount(){ return Number(localStorage.getItem('techmarket_cart') || 0); }
-  function setCount(n){ localStorage.setItem('techmarket_cart', String(n)); updateDOM(); }
-
-  // Atualiza elementos com id 'contador-carrinho'
-  function updateDOM(){
-    document.querySelectorAll('#contador-carrinho').forEach(el => el.textContent = getCount());
-  }
-
-  // Ao carregar marca link ativo (baseado em pathname)
-  function setActiveNav(){
-    const path = location.pathname.split('/').pop() || 'index.html';
-    document.querySelectorAll('nav a').forEach(a=>{
-      const href = a.getAttribute('href');
-      if(!href) return;
-      if(href === path || (href.endsWith('index.html') && path === '')) a.classList.add('active');
-      else a.classList.remove('active');
-    });
-  }
-
-  // Função pública para adicionar item (pode ser chamada pelos botões)
-  window.techmarket = {
-    addToCart: function(increment=1){
-      setCount(getCount() + Number(increment));
-    },
-    clearCart: function(){ setCount(0); }
-  };
-
-  // Event listeners globais
-  document.addEventListener('DOMContentLoaded', function(){
-    updateDOM();
-    setActiveNav();
-
-    // conecta botões com classe .btn-adicionar
-    document.querySelectorAll('.btn-adicionar').forEach(btn=>{
-      btn.addEventListener('click', function(e){
-        e.preventDefault();
-        window.techmarket.addToCart(1);
-        btn.textContent = 'Adicionado ✓';
-        setTimeout(()=> btn.textContent = 'Adicionar ao Carrinho', 1200);
-      });
-    });
-  });
-})();
